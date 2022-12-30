@@ -1,0 +1,6 @@
+name: Vynl
+version: 1.0
+author: 1Chickxn
+main: me.chickxn.Vynl
+commands:
+  permission:
