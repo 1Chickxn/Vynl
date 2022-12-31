@@ -3,6 +3,9 @@ package me.chickxn;
 import lombok.Getter;
 import me.chickxn.commands.PermissionCommand;
 import me.chickxn.handler.PermissionHandler;
+import me.chickxn.listener.PlayerJoinListener;
+import org.bukkit.Bukkit;
+import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
@@ -30,7 +33,10 @@ public class Vynl extends JavaPlugin {
         if(!file.exists()) file.mkdir();
 
         this.permissionHandler = new PermissionHandler();
+        permissionHandler.listGroups();
         getCommand("permission").setExecutor(new PermissionCommand());
+        PluginManager pluginManager = Bukkit.getPluginManager();
+        pluginManager.registerEvents(new PlayerJoinListener(), this);
     }
 
     @Override

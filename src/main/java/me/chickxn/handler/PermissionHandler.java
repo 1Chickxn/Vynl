@@ -1,7 +1,11 @@
 package me.chickxn.handler;
 
+import me.chickxn.Vynl;
+import org.bukkit.Bukkit;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Player;
+import org.bukkit.permissions.PermissionAttachment;
 
 import java.io.File;
 import java.io.IOException;
@@ -28,6 +32,57 @@ public final class PermissionHandler {
             exception.printStackTrace();
         }
     }
+
+    public void setPlayerGroup(String uuid, String groupName) {
+        if (existsGroup(groupName)) {
+            if (existsPlayer(uuid)) {
+                yamlConfiguration.set("permission.player." + uuid + ".group", groupName);
+                this.saveConfig();
+            }
+        }
+    }
+
+    public void createPlayer(String uuid, String groupName) {
+        if (existsGroup(groupName)) {
+            if (!existsPlayer(uuid)) {
+                ArrayList<String> playerPermissions = new ArrayList<>();
+                yamlConfiguration.set("permission.player." + uuid + ".group", groupName);
+                yamlConfiguration.set("permission.player." + uuid + ".permissions", playerPermissions);
+                this.saveConfig();
+            }
+        }
+    }
+
+    public ArrayList<String> listPlayerPermission(String uuid) {
+        ArrayList<String> playerPermissions = (ArrayList<String>) yamlConfiguration.get("permission.player." + uuid + ".permissions");
+        return playerPermissions;
+    }
+
+    public String getPlayerGroup(String uuid) {
+        return yamlConfiguration.getString("permission.player." + uuid + ".group");
+    }
+
+    public boolean existsPlayer(String uuid) {
+        if (!(yamlConfiguration.get("permission.player." + uuid) == null)) {
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    public void initGroupPermissions(Player player) {
+        String uuid = player.getUniqueId().toString();
+        if (existsPlayer(uuid)) {
+            String groupName = getPlayerGroup(uuid);
+            PermissionAttachment permissionAttachment = player.addAttachment(Vynl.getInstance());
+            for (String initGroupPermissions : listGroupPermissions(groupName)) {
+                permissionAttachment.setPermission(initGroupPermissions, true);
+            }
+        }else{
+            createPlayer(uuid, "default");
+        }
+    }
+
 
     public void removeGroupPermission(String groupName, String permission) {
         if (existsGroup(groupName)) {
@@ -78,10 +133,12 @@ public final class PermissionHandler {
         return groupPermissions;
     }
 
-    public void listGroups() {
+    public ArrayList<String> listGroups() {
+        ArrayList<String> groups = new ArrayList<>();
         for(String key : yamlConfiguration.getConfigurationSection("permission.groups").getKeys(false)){
-            System.out.println(yamlConfiguration.getString("permission.groups."+key));
+            groups.add(key);
         }
+        return groups;
     }
 
     public boolean existsGroup(String groupName) {

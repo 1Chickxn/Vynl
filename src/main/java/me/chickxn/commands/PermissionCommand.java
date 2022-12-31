@@ -23,7 +23,8 @@ public class PermissionCommand implements CommandExecutor {
                 }else if (args.length == 1){
                     if (args[0].equalsIgnoreCase("group")) {
                         player.sendMessage(Vynl.getInstance().getPrefix() + "all groups");
-
+                        String groups = String.valueOf(Vynl.getInstance().getPermissionHandler().listGroups());
+                        player.sendMessage(Vynl.getInstance().getPrefix() + "§a" + groups.replace("[", "").replace("]", "").replace(",", "§8,§a"));
                     }
                 }else if (args.length == 2) {
                     String groupName = args[1];
@@ -52,6 +53,13 @@ public class PermissionCommand implements CommandExecutor {
                         }else{
                             player.sendMessage(Vynl.getInstance().getPrefix() + "Die Gruppe §8(§a" + groupName + "§8) §7exestiert nicht§8!");
                         }
+                    }else{
+                        player.sendMessage(Vynl.getInstance().getPrefix() + "Permissions");
+                        player.sendMessage(Vynl.getInstance().getPrefix() + "/permission group");
+                        player.sendMessage(Vynl.getInstance().getPrefix() + "/permission group §8(§aGROUP§8) §7create");
+                        player.sendMessage(Vynl.getInstance().getPrefix() + "/permission group §8(§aGROUP§8) §7delete");
+                        player.sendMessage(Vynl.getInstance().getPrefix() + "/permission group §8(§aGROUP§8) §7remove §8(§aPERMISSION§8)");
+                        player.sendMessage(Vynl.getInstance().getPrefix() + "/permission group §8(§aGROUP§8) §7add §8(§aPERMISSION§8)");
                     }
                 }else if (args.length == 4) {
                     String groupName = args[1];
@@ -70,6 +78,13 @@ public class PermissionCommand implements CommandExecutor {
                         }else{
                             player.sendMessage(Vynl.getInstance().getPrefix() + "Die Permission §8(§a" + permissions + "§8) §7exestiert in der Gruppe §8(§a" + groupName + "§8) §7nicht§8!");
                         }
+                    }else{
+                        player.sendMessage(Vynl.getInstance().getPrefix() + "Permissions");
+                        player.sendMessage(Vynl.getInstance().getPrefix() + "/permission group");
+                        player.sendMessage(Vynl.getInstance().getPrefix() + "/permission group §8(§aGROUP§8) §7create");
+                        player.sendMessage(Vynl.getInstance().getPrefix() + "/permission group §8(§aGROUP§8) §7delete");
+                        player.sendMessage(Vynl.getInstance().getPrefix() + "/permission group §8(§aGROUP§8) §7remove §8(§aPERMISSION§8)");
+                        player.sendMessage(Vynl.getInstance().getPrefix() + "/permission group §8(§aGROUP§8) §7add §8(§aPERMISSION§8)");
                     }
                 }
             }else{
