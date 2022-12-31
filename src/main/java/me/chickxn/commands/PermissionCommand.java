@@ -1,6 +1,7 @@
 package me.chickxn.commands;
 
 import me.chickxn.Vynl;
+import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -68,6 +69,9 @@ public class PermissionCommand implements CommandExecutor {
                         if (!Vynl.getInstance().getPermissionHandler().existsGroupPermission(groupName, permissions)) {
                             Vynl.getInstance().getPermissionHandler().addGroupPermission(groupName, permissions);
                             player.sendMessage(Vynl.getInstance().getPrefix() + "Die Permission §8(§a" + permissions + "§8) §7wurde in der Gruppe §8(§a" + groupName + "§8) §7hinzugefügt§8!");
+                            for (Player onlinePlayers : Bukkit.getOnlinePlayers()) {
+                                Vynl.getInstance().getPermissionHandler().updatePermission(onlinePlayers);
+                            }
                         }else{
                             player.sendMessage(Vynl.getInstance().getPrefix() + "Die Permission §8(§a" + permissions + "§8) §7ist bereits in der Gruppe §8(§a" + groupName + "§8)§8!");
                         }
@@ -75,6 +79,9 @@ public class PermissionCommand implements CommandExecutor {
                         if (Vynl.getInstance().getPermissionHandler().existsGroupPermission(groupName, permissions)) {
                             Vynl.getInstance().getPermissionHandler().removeGroupPermission(groupName, permissions);
                             player.sendMessage(Vynl.getInstance().getPrefix() + "Die Permission §8(§a" + permissions + "§8) §7wurde in der Gruppe §8(§a" + groupName + "§8) §7entfernt§8!");
+                            for (Player onlinePlayers : Bukkit.getOnlinePlayers()) {
+                                Vynl.getInstance().getPermissionHandler().updatePermission(onlinePlayers);
+                            }
                         }else{
                             player.sendMessage(Vynl.getInstance().getPrefix() + "Die Permission §8(§a" + permissions + "§8) §7exestiert in der Gruppe §8(§a" + groupName + "§8) §7nicht§8!");
                         }

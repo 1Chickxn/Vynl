@@ -9,13 +9,14 @@ import org.bukkit.permissions.PermissionAttachment;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public final class PermissionHandler {
 
     private File config = new File("plugins/Vynl/permissions.yml");
     private YamlConfiguration yamlConfiguration = YamlConfiguration.loadConfiguration(config);
+
+    private Map<String, PermissionAttachment> permissions = new HashMap<>();
 
     public PermissionHandler() {
         try {
@@ -70,6 +71,14 @@ public final class PermissionHandler {
         }
     }
 
+    public void updatePermission(Player player) {
+        String uuid = player.getUniqueId().toString();
+        PermissionAttachment permissionAttachment = permissions.get(uuid);
+        player.removeAttachment(permissionAttachment);
+        permissions.clear();
+        initGroupPermissions(player);
+    }
+
     public void initGroupPermissions(Player player) {
         String uuid = player.getUniqueId().toString();
         if (existsPlayer(uuid)) {
@@ -77,6 +86,7 @@ public final class PermissionHandler {
             PermissionAttachment permissionAttachment = player.addAttachment(Vynl.getInstance());
             for (String initGroupPermissions : listGroupPermissions(groupName)) {
                 permissionAttachment.setPermission(initGroupPermissions, true);
+                permissions.put(uuid, permissionAttachment);
             }
         }else{
             createPlayer(uuid, "default");
