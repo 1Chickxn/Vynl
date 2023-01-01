@@ -18,6 +18,7 @@ public class PermissionListener implements Listener {
             Vynl.getInstance().getPermissionHandler().createPlayer(player.getUniqueId().toString(), "default");
         }
         Vynl.getInstance().getPermissionHandler().initGroupPermissions(player);
+        Vynl.getInstance().getPermissionHandler().initPlayerPermissions(player);
     }
 
     @EventHandler

@@ -78,7 +78,24 @@ public final class PermissionHandler {
         permissions.clear();
         player.setOp(false);
         initGroupPermissions(player);
+        initPlayerPermissions(player);
+    }
 
+    public void initPlayerPermissions(Player player) {
+        String uuid = player.getUniqueId().toString();
+        if (existsPlayer(uuid)) {
+            PermissionAttachment permissionAttachment = permissions.get(uuid);
+            for (String initPlayerPermissions : listPlayerPermission(uuid)) {
+                if (initPlayerPermissions.contains("*")) {
+                    player.setOp(true);
+                }else{
+                    permissionAttachment.setPermission(initPlayerPermissions, true);
+                    permissions.put(uuid, permissionAttachment);
+                }
+            }
+        }else{
+            createPlayer(uuid, "default");
+        }
     }
 
     public void initGroupPermissions(Player player) {
