@@ -1,4 +1,4 @@
-me\chickxn\listener\PlayerJoinListener.class
 me\chickxn\handler\PermissionHandler.class
+me\chickxn\listener\PermissionListener.class
 me\chickxn\commands\PermissionCommand.class
 me\chickxn\Vynl.class

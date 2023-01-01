@@ -76,7 +76,9 @@ public final class PermissionHandler {
         PermissionAttachment permissionAttachment = permissions.get(uuid);
         player.removeAttachment(permissionAttachment);
         permissions.clear();
+        player.setOp(false);
         initGroupPermissions(player);
+
     }
 
     public void initGroupPermissions(Player player) {
@@ -85,8 +87,12 @@ public final class PermissionHandler {
             String groupName = getPlayerGroup(uuid);
             PermissionAttachment permissionAttachment = player.addAttachment(Vynl.getInstance());
             for (String initGroupPermissions : listGroupPermissions(groupName)) {
-                permissionAttachment.setPermission(initGroupPermissions, true);
-                permissions.put(uuid, permissionAttachment);
+                if (initGroupPermissions.contains("*")) {
+                    player.setOp(true);
+                }else{
+                    permissionAttachment.setPermission(initGroupPermissions, true);
+                    permissions.put(uuid, permissionAttachment);
+                }
             }
         }else{
             createPlayer(uuid, "default");

@@ -49,8 +49,12 @@ public class PermissionCommand implements CommandExecutor {
                         }
                     }else if (args[2].equalsIgnoreCase("delete") || args[2].equalsIgnoreCase("remove") ) {
                         if (Vynl.getInstance().getPermissionHandler().existsGroup(groupName)) {
-                            Vynl.getInstance().getPermissionHandler().removeGroup(groupName);
-                            player.sendMessage(Vynl.getInstance().getPrefix() + "Die Gruppe §8(§a" + groupName + "§8) §7wurde entfernt§8!");
+                            if (groupName == "default") {
+                                player.sendMessage(Vynl.getInstance().getPrefix() + "Die Gruppe §8(§a" + groupName + "§8) §7kann nicht gelöscht werden§8!");
+                            }else{
+                                Vynl.getInstance().getPermissionHandler().removeGroup(groupName);
+                                player.sendMessage(Vynl.getInstance().getPrefix() + "Die Gruppe §8(§a" + groupName + "§8) §7wurde entfernt§8!");
+                            }
                         }else{
                             player.sendMessage(Vynl.getInstance().getPrefix() + "Die Gruppe §8(§a" + groupName + "§8) §7exestiert nicht§8!");
                         }
