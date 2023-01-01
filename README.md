@@ -4,7 +4,7 @@ Vynl is a minecraft plugins where you can give groups and player permissions for
 ---
 
 # Handler 
-- [ ] PermissionHandler (Not finished)
+- [x] PermissionHandler (finished)
 
 # Commands
 - [ ] PermissionCommand (Not finished)
