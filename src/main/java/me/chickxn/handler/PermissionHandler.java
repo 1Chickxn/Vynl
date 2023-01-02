@@ -1,7 +1,6 @@
 package me.chickxn.handler;
 
 import me.chickxn.Vynl;
-import org.bukkit.Bukkit;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -9,14 +8,16 @@ import org.bukkit.permissions.PermissionAttachment;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public final class PermissionHandler {
+    private final File config = new File("plugins/Vynl/permissions.yml");
+    private final YamlConfiguration yamlConfiguration = YamlConfiguration.loadConfiguration(config);
 
-    private File config = new File("plugins/Vynl/permissions.yml");
-    private YamlConfiguration yamlConfiguration = YamlConfiguration.loadConfiguration(config);
-
-    private Map<String, PermissionAttachment> permissions = new HashMap<>();
+    private final Map<String, PermissionAttachment> permissions = new HashMap<>();
 
     public PermissionHandler() {
         try {
@@ -64,11 +65,7 @@ public final class PermissionHandler {
     }
 
     public boolean existsPlayer(String uuid) {
-        if (!(yamlConfiguration.get("permission.player." + uuid) == null)) {
-            return true;
-        }else{
-            return false;
-        }
+        return !(yamlConfiguration.get("permission.player." + uuid) == null);
     }
 
     public void updatePermission(Player player) {
@@ -88,12 +85,12 @@ public final class PermissionHandler {
             for (String initPlayerPermissions : listPlayerPermission(uuid)) {
                 if (initPlayerPermissions.contains("*")) {
                     player.setOp(true);
-                }else{
+                } else {
                     permissionAttachment.setPermission(initPlayerPermissions, true);
                     permissions.put(uuid, permissionAttachment);
                 }
             }
-        }else{
+        } else {
             createPlayer(uuid, "default");
         }
     }
@@ -106,12 +103,12 @@ public final class PermissionHandler {
             for (String initGroupPermissions : listGroupPermissions(groupName)) {
                 if (initGroupPermissions.contains("*")) {
                     player.setOp(true);
-                }else{
+                } else {
                     permissionAttachment.setPermission(initGroupPermissions, true);
                     permissions.put(uuid, permissionAttachment);
                 }
             }
-        }else{
+        } else {
             createPlayer(uuid, "default");
         }
     }
@@ -138,13 +135,10 @@ public final class PermissionHandler {
             }
         }
     }
+
     public boolean existsGroupPermission(String groupName, String permission) {
         ArrayList<String> groupPermissions = (ArrayList<String>) yamlConfiguration.get("permission.groups." + groupName);
-        if (!groupPermissions.contains(permission)) {
-            return false;
-        }else{
-            return true;
-        }
+        return groupPermissions.contains(permission);
     }
 
     public void createGroup(String groupName) {
@@ -161,6 +155,14 @@ public final class PermissionHandler {
         }
     }
 
+    public ArrayList<String> listPlayers() {
+        ArrayList<String> groups = new ArrayList<>();
+        for (String key : yamlConfiguration.getConfigurationSection("permission.player").getKeys(false)) {
+            groups.add(key);
+        }
+        return groups;
+    }
+
     public ArrayList<String> listGroupPermissions(String groupName) {
         ArrayList<String> groupPermissions = (ArrayList<String>) yamlConfiguration.get("permission.groups." + groupName);
         return groupPermissions;
@@ -168,18 +170,14 @@ public final class PermissionHandler {
 
     public ArrayList<String> listGroups() {
         ArrayList<String> groups = new ArrayList<>();
-        for(String key : yamlConfiguration.getConfigurationSection("permission.groups").getKeys(false)){
+        for (String key : yamlConfiguration.getConfigurationSection("permission.groups").getKeys(false)) {
             groups.add(key);
         }
         return groups;
     }
 
     public boolean existsGroup(String groupName) {
-        if (!(yamlConfiguration.getString("permission.groups." + groupName) == null)) {
-            return true;
-        }else{
-            return false;
-        }
+        return !(yamlConfiguration.getString("permission.groups." + groupName) == null);
     }
 
     public void saveConfig() {
