@@ -71,7 +71,9 @@ public final class PermissionHandler {
     public void updatePermission(Player player) {
         String uuid = player.getUniqueId().toString();
         PermissionAttachment permissionAttachment = permissions.get(uuid);
-        player.removeAttachment(permissionAttachment);
+        if (permissionAttachment != null) {
+            player.removeAttachment(permissionAttachment);
+        }
         permissions.clear();
         player.setOp(false);
         initGroupPermissions(player);
@@ -155,12 +157,8 @@ public final class PermissionHandler {
         }
     }
 
-    public ArrayList<String> listPlayers() {
-        ArrayList<String> groups = new ArrayList<>();
-        for (String key : yamlConfiguration.getConfigurationSection("permission.player").getKeys(false)) {
-            groups.add(key);
-        }
-        return groups;
+    public void listPlayers() {
+
     }
 
     public ArrayList<String> listGroupPermissions(String groupName) {

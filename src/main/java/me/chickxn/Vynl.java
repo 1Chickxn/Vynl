@@ -6,9 +6,6 @@ import me.chickxn.handler.PermissionHandler;
 import me.chickxn.listener.PermissionListener;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-import org.bukkit.permissions.PermissibleBase;
-import org.bukkit.permissions.PermissionAttachment;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -38,6 +35,9 @@ public class Vynl extends JavaPlugin {
         PluginManager pluginManager = Bukkit.getPluginManager();
         pluginManager.registerEvents(new PermissionListener(), this);
 
+        for (Player onlinePlayers : Bukkit.getOnlinePlayers() ) {
+            Vynl.getInstance().getPermissionHandler().updatePermission(onlinePlayers.getPlayer());
+        }
     }
 
     @Override

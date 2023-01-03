@@ -33,7 +33,6 @@ public class PermissionCommand implements CommandExecutor {
                             String groupPermissions = String.valueOf(Vynl.getInstance().getPermissionHandler().listGroupPermissions(groupName));
                             player.sendMessage(Vynl.getInstance().getPrefix() + "Info zur Gruppe §a" + groupName);
                             player.sendMessage(Vynl.getInstance().getPrefix() + "Permissions: §a" + groupPermissions.replace("[", "").replace("]", "").replace(",", "§8,§a"));
-                            player.sendMessage(Vynl.getInstance().getPrefix() + "Permissions: §a" + Vynl.getInstance().getPermissionHandler().listPlayers());
                         } else {
                             player.sendMessage(Vynl.getInstance().getPrefix() + "Die Gruppe §8(§a" + groupName + "§8) §7exestiert nicht§8!");
                         }
