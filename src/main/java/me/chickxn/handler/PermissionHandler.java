@@ -84,12 +84,12 @@ public final class PermissionHandler {
         String uuid = player.getUniqueId().toString();
         if (existsPlayer(uuid)) {
             PermissionAttachment permissionAttachment = permissions.get(uuid);
+            permissions.put(uuid, permissionAttachment);
             for (String initPlayerPermissions : listPlayerPermission(uuid)) {
                 if (initPlayerPermissions.contains("*")) {
                     player.setOp(true);
                 } else {
                     permissionAttachment.setPermission(initPlayerPermissions, true);
-                    permissions.put(uuid, permissionAttachment);
                 }
             }
         } else {
@@ -102,12 +102,13 @@ public final class PermissionHandler {
         if (existsPlayer(uuid)) {
             String groupName = getPlayerGroup(uuid);
             PermissionAttachment permissionAttachment = player.addAttachment(Vynl.getInstance());
+            permissions.put(uuid, permissionAttachment);
             for (String initGroupPermissions : listGroupPermissions(groupName)) {
                 if (initGroupPermissions.contains("*")) {
                     player.setOp(true);
                 } else {
                     permissionAttachment.setPermission(initGroupPermissions, true);
-                    permissions.put(uuid, permissionAttachment);
+
                 }
             }
         } else {

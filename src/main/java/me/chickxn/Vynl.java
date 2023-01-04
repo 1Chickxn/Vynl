@@ -35,8 +35,8 @@ public class Vynl extends JavaPlugin {
         PluginManager pluginManager = Bukkit.getPluginManager();
         pluginManager.registerEvents(new PermissionListener(), this);
 
-        for (Player onlinePlayers : Bukkit.getOnlinePlayers() ) {
-            Vynl.getInstance().getPermissionHandler().updatePermission(onlinePlayers.getPlayer());
+        for (Player onlinePlayers : Bukkit.getOnlinePlayers()) {
+            Vynl.getInstance().getPermissionHandler().updatePermission(onlinePlayers);
         }
     }
 
