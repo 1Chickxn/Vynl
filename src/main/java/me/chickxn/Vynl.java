@@ -2,6 +2,7 @@ package me.chickxn;
 
 import lombok.Getter;
 import me.chickxn.commands.PermissionCommand;
+import me.chickxn.fetcher.UUIDFetcher;
 import me.chickxn.handler.PermissionHandler;
 import me.chickxn.listener.PermissionListener;
 import org.bukkit.Bukkit;
@@ -20,6 +21,9 @@ public class Vynl extends JavaPlugin {
     private File file;
     @Getter
     private PermissionHandler permissionHandler;
+
+    @Getter
+    private UUIDFetcher uuidFetcher = new UUIDFetcher();
 
     @Override
     public void onEnable() {

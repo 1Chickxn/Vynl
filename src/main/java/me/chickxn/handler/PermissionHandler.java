@@ -116,6 +116,33 @@ public final class PermissionHandler {
         }
     }
 
+    public void removePlayerPermission(String uuid, String permission) {
+        if (existsPlayer(uuid)) {
+            if (existsPlayerPermission(uuid, permission)) {
+                ArrayList<String> playerPermissions = (ArrayList<String>) yamlConfiguration.get("permission.player." + uuid + ".permissions");
+                playerPermissions.remove(permission);
+                yamlConfiguration.set("permission.player." + uuid + ".permissions", playerPermissions);
+                this.saveConfig();
+            }
+        }
+    }
+
+    public void addPlayerPermission(String uuid, String permission) {
+        if (existsPlayer(uuid)) {
+            if (!existsPlayerPermission(uuid, permission)) {
+                ArrayList<String> playerPermissions = (ArrayList<String>) yamlConfiguration.get("permission.player." + uuid + ".permissions");
+                playerPermissions.add(permission);
+                yamlConfiguration.set("permission." + uuid + ".permissions", playerPermissions);
+                this.saveConfig();
+            }
+        }
+    }
+
+    public boolean existsPlayerPermission(String uuid, String permission) {
+        ArrayList<String> playerPermissions = (ArrayList<String>) yamlConfiguration.get("permission.player." + uuid + ".permissions");
+        return playerPermissions.contains(permission);
+    }
+
 
     public void removeGroupPermission(String groupName, String permission) {
         if (existsGroup(groupName)) {
