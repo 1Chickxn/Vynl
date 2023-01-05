@@ -1,7 +1,6 @@
 package me.chickxn.commands;
 
 import me.chickxn.Vynl;
-import me.chickxn.fetcher.UUIDFetcher;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -35,14 +34,14 @@ public class PermissionCommand implements CommandExecutor {
                                 player.sendMessage(Vynl.getInstance().getPrefix() + "Die Gruppe §8(§a" + groupName + "§8) §7exestiert nicht§8!");
                             }
                         }
-                    }else if (args[0].equalsIgnoreCase("player")) {
+                    } else if (args[0].equalsIgnoreCase("player")) {
                         String uuid = Vynl.getInstance().getUuidFetcher().getUUID(playerName);
                         if (Vynl.getInstance().getPermissionHandler().existsPlayer(uuid)) {
                             String playerPermissions = String.valueOf(Vynl.getInstance().getPermissionHandler().listPlayerPermission(uuid));
                             player.sendMessage(Vynl.getInstance().getPrefix() + "Info zum Spieler: §a" + playerName);
                             player.sendMessage(Vynl.getInstance().getPrefix() + "Gruppe: §a" + Vynl.getInstance().getPermissionHandler().getPlayerGroup(uuid));
                             player.sendMessage(Vynl.getInstance().getPrefix() + "Permissions: §a" + playerPermissions.replace("[", "").replace("]", "").replace(",", "§8,§a"));
-                        }else{
+                        } else {
                             player.sendMessage(Vynl.getInstance().getPrefix() + "Der Spieler §8(§a" + playerName + "§8) §7exestiert nicht§8!");
                         }
                     }
@@ -99,37 +98,37 @@ public class PermissionCommand implements CommandExecutor {
                         } else {
                             sendHelp(player);
                         }
-                    }else if (args[0].equalsIgnoreCase("player")) {
+                    } else if (args[0].equalsIgnoreCase("player")) {
                         if (args[2].equalsIgnoreCase("add")) {
                             if (Vynl.getInstance().getPermissionHandler().existsPlayer(uuid)) {
                                 if (!Vynl.getInstance().getPermissionHandler().existsPlayerPermission(uuid, permissions)) {
                                     Vynl.getInstance().getPermissionHandler().addPlayerPermission(uuid, permissions);
-                                    player.sendMessage(Vynl.getInstance().getPrefix() + "Der Spieler §8(§a" + playerName + "§8) §7hat nun die Permission §8(§a" + permissions +"§8)");
+                                    player.sendMessage(Vynl.getInstance().getPrefix() + "Der Spieler §8(§a" + playerName + "§8) §7hat nun die Permission §8(§a" + permissions + "§8)");
                                     for (Player onlinePlayers : Bukkit.getOnlinePlayers()) {
                                         Vynl.getInstance().getPermissionHandler().updatePermission(onlinePlayers);
                                     }
-                                }else{
-                                    player.sendMessage(Vynl.getInstance().getPrefix() + "Der Spieler §8(§a" + playerName + "§8) §7hat die Permission §8(§a" + permissions +"§8) §7bereits§8!");
+                                } else {
+                                    player.sendMessage(Vynl.getInstance().getPrefix() + "Der Spieler §8(§a" + playerName + "§8) §7hat die Permission §8(§a" + permissions + "§8) §7bereits§8!");
                                 }
-                            }else{
+                            } else {
                                 player.sendMessage(Vynl.getInstance().getPrefix() + "Der Spieler §8(§a" + playerName + "§8) §7exestiert nicht§8!");
                             }
-                        }else if (args[2].equalsIgnoreCase("remove")) {
+                        } else if (args[2].equalsIgnoreCase("remove")) {
                             if (Vynl.getInstance().getPermissionHandler().existsPlayer(uuid)) {
                                 if (Vynl.getInstance().getPermissionHandler().existsPlayerPermission(uuid, permissions)) {
                                     Vynl.getInstance().getPermissionHandler().removePlayerPermission(uuid, permissions);
-                                    player.sendMessage(Vynl.getInstance().getPrefix() + "Der Spieler §8(§a" + playerName + "§8) §7hat nun nicht mehr die Permission §8(§a" + permissions +"§8)");
+                                    player.sendMessage(Vynl.getInstance().getPrefix() + "Der Spieler §8(§a" + playerName + "§8) §7hat nun nicht mehr die Permission §8(§a" + permissions + "§8)");
                                     for (Player onlinePlayers : Bukkit.getOnlinePlayers()) {
                                         Vynl.getInstance().getPermissionHandler().updatePermission(onlinePlayers);
                                     }
-                                }else{
-                                    player.sendMessage(Vynl.getInstance().getPrefix() + "Der Spieler §8(§a" + playerName + "§8) §7hat die Permission §8(§a" + permissions +"§8) §7nicht§8!");
+                                } else {
+                                    player.sendMessage(Vynl.getInstance().getPrefix() + "Der Spieler §8(§a" + playerName + "§8) §7hat die Permission §8(§a" + permissions + "§8) §7nicht§8!");
                                 }
-                            }else{
+                            } else {
                                 player.sendMessage(Vynl.getInstance().getPrefix() + "Der Spieler §8(§a" + playerName + "§8) §7exestiert nicht§8!");
                             }
-                        }else if (args[2].equalsIgnoreCase("set")) {
-                           if (Vynl.getInstance().getPermissionHandler().existsPlayer(uuid)) {
+                        } else if (args[2].equalsIgnoreCase("set")) {
+                            if (Vynl.getInstance().getPermissionHandler().existsPlayer(uuid)) {
                                 if (Vynl.getInstance().getPermissionHandler().existsGroup(newGroupName)) {
                                     if (!Vynl.getInstance().getPermissionHandler().getPlayerGroup(uuid).contains(newGroupName)) {
                                         Vynl.getInstance().getPermissionHandler().setPlayerGroup(uuid, newGroupName);
@@ -137,16 +136,16 @@ public class PermissionCommand implements CommandExecutor {
                                         for (Player onlinePlayers : Bukkit.getOnlinePlayers()) {
                                             Vynl.getInstance().getPermissionHandler().updatePermission(onlinePlayers);
                                         }
-                                    }else{
+                                    } else {
                                         player.sendMessage(Vynl.getInstance().getPrefix() + "Der Spieler §8(§a" + playerName + "§8) §7ist bereits in der Gruppe §8(§a" + newGroupName + "§8) §8!");
                                     }
-                                }else{
+                                } else {
                                     player.sendMessage(Vynl.getInstance().getPrefix() + "Die Gruppe §8(§a" + newGroupName + "§8) §7exestiert nicht!");
                                 }
-                           }else{
-                               player.sendMessage(Vynl.getInstance().getPrefix() + "Der Spieler §8(§a" + playerName + "§8) §7exestiert nicht§8!");
-                           }
-                        }else{
+                            } else {
+                                player.sendMessage(Vynl.getInstance().getPrefix() + "Der Spieler §8(§a" + playerName + "§8) §7exestiert nicht§8!");
+                            }
+                        } else {
                             sendHelp(player);
                         }
                     }

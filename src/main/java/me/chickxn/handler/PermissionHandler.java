@@ -1,10 +1,15 @@
 package me.chickxn.handler;
 
+import lombok.Getter;
 import me.chickxn.Vynl;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.permissions.PermissionAttachment;
+import org.bukkit.scoreboard.Scoreboard;
+import org.bukkit.scoreboard.Team;
 
 import java.io.File;
 import java.io.IOException;
@@ -15,6 +20,8 @@ import java.util.Map;
 
 public final class PermissionHandler {
     private final File config = new File("plugins/Vynl/permissions.yml");
+
+    @Getter
     private final YamlConfiguration yamlConfiguration = YamlConfiguration.loadConfiguration(config);
 
     private final Map<String, PermissionAttachment> permissions = new HashMap<>();
@@ -25,8 +32,17 @@ public final class PermissionHandler {
                 config.createNewFile();
                 yamlConfiguration.options().header("Permissions");
                 yamlConfiguration.options().copyDefaults(true);
-                yamlConfiguration.addDefault("permission.groups.default", List.of("module.bank.use"));
-                yamlConfiguration.addDefault("permission.groups.admin", List.of("module.bank.use"));
+                yamlConfiguration.addDefault("prefix.chat", "{group} {player} §8| §7{message} {suffix}");
+                yamlConfiguration.addDefault("permission.groups.default.permissions", List.of("module.bank.use"));
+                yamlConfiguration.addDefault("permission.groups.admin.permissions", List.of("module.bank.use"));
+                yamlConfiguration.addDefault("permission.groups.admin.prefix", "§cAdmin §7");
+                yamlConfiguration.addDefault("permission.groups.default.prefix", "§7");
+                yamlConfiguration.addDefault("permission.groups.admin.tablist.namecolor", "§c");
+                yamlConfiguration.addDefault("permission.groups.default.tablist.namecolor", "§7");
+                yamlConfiguration.addDefault("permission.groups.admin.suffix", "");
+                yamlConfiguration.addDefault("permission.groups.default.suffix", "");
+                yamlConfiguration.addDefault("permission.groups.admin.id", 001);
+                yamlConfiguration.addDefault("permission.groups.default.id", 002);
                 yamlConfiguration.save(config);
             }
             yamlConfiguration.load(config);
@@ -64,6 +80,12 @@ public final class PermissionHandler {
         return yamlConfiguration.getString("permission.player." + uuid + ".group");
     }
 
+    public String getPlayerGroupWithID(String uuid) {
+        String group = yamlConfiguration.getString("permission.player." + uuid + ".group");
+        String groupID = getGroupID(group);
+        return groupID + group;
+    }
+
     public boolean existsPlayer(String uuid) {
         return !(yamlConfiguration.get("permission.player." + uuid) == null);
     }
@@ -78,6 +100,7 @@ public final class PermissionHandler {
         player.setOp(false);
         initGroupPermissions(player);
         initPlayerPermissions(player);
+        setGroupPrefix(player);
     }
 
     public void initPlayerPermissions(Player player) {
@@ -92,8 +115,6 @@ public final class PermissionHandler {
                     permissionAttachment.setPermission(initPlayerPermissions, true);
                 }
             }
-        } else {
-            createPlayer(uuid, "default");
         }
     }
 
@@ -108,11 +129,8 @@ public final class PermissionHandler {
                     player.setOp(true);
                 } else {
                     permissionAttachment.setPermission(initGroupPermissions, true);
-
                 }
             }
-        } else {
-            createPlayer(uuid, "default");
         }
     }
 
@@ -143,13 +161,45 @@ public final class PermissionHandler {
         return playerPermissions.contains(permission);
     }
 
+    public void setGroupPrefix(Player player) {
+        String uuid = player.getUniqueId().toString();
+        Scoreboard scoreboard = Bukkit.getScoreboardManager().getMainScoreboard();
+        for (String groupName : listGroups()) {
+            Team team = scoreboard.getTeam(getGroupID(groupName) + groupName);
+            if (team == null) {
+                scoreboard.registerNewTeam(getGroupID(groupName) + groupName);
+            } else {
+                team.setPrefix(getGroupPrefix(groupName));
+            }
+            if (getPlayerGroupWithID(uuid).contains(team.getName())) {
+                team.addEntry(player.getName());
+                team.setColor(ChatColor.getByChar(getGroupTablistColor(groupName).replace("§", "")));
+            }
+        }
+    }
+
+    public String getGroupID(String groupName) {
+        return yamlConfiguration.getString("permission.groups." + groupName + ".id");
+    }
+
+    public String getGroupTablistColor(String groupName) {
+        return yamlConfiguration.getString("permission.groups." + groupName + ".tablist.namecolor");
+    }
+
+    public String getGroupPrefix(String groupName) {
+        return yamlConfiguration.getString("permission.groups." + groupName + ".prefix");
+    }
+
+    public String getGroupSuffix(String groupName) {
+        return yamlConfiguration.getString("permission.groups." + groupName + ".suffix");
+    }
 
     public void removeGroupPermission(String groupName, String permission) {
         if (existsGroup(groupName)) {
             if (existsGroupPermission(groupName, permission)) {
-                ArrayList<String> groupPermission = (ArrayList<String>) yamlConfiguration.get("permission.groups." + groupName);
+                ArrayList<String> groupPermission = (ArrayList<String>) yamlConfiguration.get("permission.groups." + groupName + ".permissions");
                 groupPermission.remove(permission);
-                yamlConfiguration.set("permission.groups." + groupName, groupPermission);
+                yamlConfiguration.set("permission.groups." + groupName + ".permissions", groupPermission);
                 this.saveConfig();
             }
         }
@@ -158,22 +208,26 @@ public final class PermissionHandler {
     public void addGroupPermission(String groupName, String permission) {
         if (existsGroup(groupName)) {
             if (!existsGroupPermission(groupName, permission)) {
-                ArrayList<String> groupPermission = (ArrayList<String>) yamlConfiguration.get("permission.groups." + groupName);
+                ArrayList<String> groupPermission = (ArrayList<String>) yamlConfiguration.get("permission.groups." + groupName + ".permissions");
                 groupPermission.add(permission);
-                yamlConfiguration.set("permission.groups." + groupName, groupPermission);
+                yamlConfiguration.set("permission.groups." + groupName + ".permissions", groupPermission);
                 this.saveConfig();
             }
         }
     }
 
     public boolean existsGroupPermission(String groupName, String permission) {
-        ArrayList<String> groupPermissions = (ArrayList<String>) yamlConfiguration.get("permission.groups." + groupName);
+        ArrayList<String> groupPermissions = (ArrayList<String>) yamlConfiguration.get("permission.groups." + groupName + ".permissions");
         return groupPermissions.contains(permission);
     }
 
     public void createGroup(String groupName) {
         if (!existsGroup(groupName)) {
-            yamlConfiguration.set("permission.groups." + groupName, List.of("module.bank.use"));
+            yamlConfiguration.set("permission.groups." + groupName + ".permissions", List.of("module.bank.use"));
+            yamlConfiguration.set("permission.groups." + groupName + ".prefix", "§7");
+            yamlConfiguration.set("permission.groups." + groupName + ".suffix", "§7");
+            yamlConfiguration.set("permission.groups." + groupName + ".tablist.namecolor", "§7");
+            yamlConfiguration.set("permission.groups." + groupName + ".id", 10);
             saveConfig();
             loadConfig();
         }
@@ -192,7 +246,7 @@ public final class PermissionHandler {
     }
 
     public ArrayList<String> listGroupPermissions(String groupName) {
-        ArrayList<String> groupPermissions = (ArrayList<String>) yamlConfiguration.get("permission.groups." + groupName);
+        ArrayList<String> groupPermissions = (ArrayList<String>) yamlConfiguration.get("permission.groups." + groupName + ".permissions");
         return groupPermissions;
     }
 

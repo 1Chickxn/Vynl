@@ -16,8 +16,7 @@ description:
   de: |
   
     ## Vynl - PermissionSystem
-    Vynl ist ein PermissionSystem wo du gruppen erstellen kannst und diese Permission setzen kannst, außerdem kannst du auch Spielern einzeln Permission geben.
-    Aktuell hat das PermissionSystem nur config support. Beim nächsten update wird es MYSQL Support geben.
+    p Beim nächsten update wird es MYSQL Support geben.
     
     ## Commands
     - /permission

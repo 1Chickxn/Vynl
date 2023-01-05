@@ -23,7 +23,7 @@ public class Vynl extends JavaPlugin {
     private PermissionHandler permissionHandler;
 
     @Getter
-    private UUIDFetcher uuidFetcher = new UUIDFetcher();
+    private final UUIDFetcher uuidFetcher = new UUIDFetcher();
 
     @Override
     public void onEnable() {
