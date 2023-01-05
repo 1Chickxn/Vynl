@@ -175,6 +175,7 @@ public final class PermissionHandler {
         if (!existsGroup(groupName)) {
             yamlConfiguration.set("permission.groups." + groupName, List.of("module.bank.use"));
             saveConfig();
+            loadConfig();
         }
     }
 
@@ -182,6 +183,7 @@ public final class PermissionHandler {
         if (existsGroup(groupName)) {
             yamlConfiguration.set("permission.groups." + groupName, null);
             saveConfig();
+            loadConfig();
         }
     }
 

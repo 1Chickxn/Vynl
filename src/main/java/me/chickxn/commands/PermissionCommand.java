@@ -73,6 +73,7 @@ public class PermissionCommand implements CommandExecutor {
                     String groupName = args[1];
                     String playerName = args[1];
                     String permissions = args[3];
+                    String newGroupName = args[3];
                     String uuid = Vynl.getInstance().getUuidFetcher().getUUID(playerName);
                     if (args[0].equalsIgnoreCase("group")) {
                         if (args[2].equalsIgnoreCase("add")) {
@@ -127,6 +128,26 @@ public class PermissionCommand implements CommandExecutor {
                             }else{
                                 player.sendMessage(Vynl.getInstance().getPrefix() + "Der Spieler §8(§a" + playerName + "§8) §7exestiert nicht§8!");
                             }
+                        }else if (args[2].equalsIgnoreCase("set")) {
+                           if (Vynl.getInstance().getPermissionHandler().existsPlayer(uuid)) {
+                                if (Vynl.getInstance().getPermissionHandler().existsGroup(newGroupName)) {
+                                    if (!Vynl.getInstance().getPermissionHandler().getPlayerGroup(uuid).contains(newGroupName)) {
+                                        Vynl.getInstance().getPermissionHandler().setPlayerGroup(uuid, newGroupName);
+                                        player.sendMessage(Vynl.getInstance().getPrefix() + "Der Spieler §8(§a" + playerName + "§8) §7ist nun in der Gruppe §8(§a" + newGroupName + "§8) §8!");
+                                        for (Player onlinePlayers : Bukkit.getOnlinePlayers()) {
+                                            Vynl.getInstance().getPermissionHandler().updatePermission(onlinePlayers);
+                                        }
+                                    }else{
+                                        player.sendMessage(Vynl.getInstance().getPrefix() + "Der Spieler §8(§a" + playerName + "§8) §7ist bereits in der Gruppe §8(§a" + newGroupName + "§8) §8!");
+                                    }
+                                }else{
+                                    player.sendMessage(Vynl.getInstance().getPrefix() + "Die Gruppe §8(§a" + newGroupName + "§8) §7exestiert nicht!");
+                                }
+                           }else{
+                               player.sendMessage(Vynl.getInstance().getPrefix() + "Der Spieler §8(§a" + playerName + "§8) §7exestiert nicht§8!");
+                           }
+                        }else{
+                            sendHelp(player);
                         }
                     }
                 }

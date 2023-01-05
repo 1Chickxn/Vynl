@@ -1,0 +1,24 @@
+specVersion: 1
+type: plugin
+name: Vynl - PermissionSystem
+authors:
+  - 1Chickxn
+download:
+  url: https://github.com/1Chickxn/Vynl/releases/
+  name: Vynl
+supportedPlatforms:
+  - spigot
+supportedGameVersions: ^1.19
+category: adminTool
+introduction:
+  de: Vynl ist ein PermissionSystem wo du Spieler gruppen und Permissions geben kannst!
+description:
+  de: |
+  
+    ## Vynl - PermissionSystem
+    Vynl ist ein PermissionSystem wo du gruppen erstellen kannst und diese Permission setzen kannst, außerdem kannst du auch Spielern einzeln Permission geben.
+    Aktuell hat das PermissionSystem nur config support. Beim nächsten update wird es MYSQL Support geben.
+    
+    ## Commands
+    - /permission
+    - /perms

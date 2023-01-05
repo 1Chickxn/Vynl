@@ -4,3 +4,5 @@ author: 1Chickxn
 main: me.chickxn.Vynl
 commands:
   permission:
+    aliases:
+      - perms
