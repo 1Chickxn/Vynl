@@ -2,10 +2,13 @@ package me.chickxn.commands;
 
 import me.chickxn.Vynl;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.scoreboard.Scoreboard;
+import org.bukkit.scoreboard.Team;
 
 public class PermissionCommand implements CommandExecutor {
 
@@ -135,6 +138,11 @@ public class PermissionCommand implements CommandExecutor {
                                         player.sendMessage(Vynl.getInstance().getPrefix() + "Der Spieler §8(§a" + playerName + "§8) §7ist nun in der Gruppe §8(§a" + newGroupName + "§8) §8!");
                                         for (Player onlinePlayers : Bukkit.getOnlinePlayers()) {
                                             Vynl.getInstance().getPermissionHandler().updatePermission(onlinePlayers);
+                                            Scoreboard scoreboard = Bukkit.getScoreboardManager().getMainScoreboard();
+                                            Team team = scoreboard.registerNewTeam(Vynl.getInstance().getPermissionHandler().getGroupID(groupName) + groupName);
+                                            team.setPrefix("§7");
+                                            team.setColor(ChatColor.getByChar("7"));
+                                            Vynl.getInstance().getPermissionHandler().setGroupPrefix(onlinePlayers);
                                         }
                                     } else {
                                         player.sendMessage(Vynl.getInstance().getPrefix() + "Der Spieler §8(§a" + playerName + "§8) §7ist bereits in der Gruppe §8(§a" + newGroupName + "§8) §8!");

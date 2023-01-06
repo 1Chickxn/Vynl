@@ -100,7 +100,6 @@ public final class PermissionHandler {
         player.setOp(false);
         initGroupPermissions(player);
         initPlayerPermissions(player);
-        setGroupPrefix(player);
     }
 
     public void initPlayerPermissions(Player player) {
@@ -168,9 +167,9 @@ public final class PermissionHandler {
             Team team = scoreboard.getTeam(getGroupID(groupName) + groupName);
             if (team == null) {
                 scoreboard.registerNewTeam(getGroupID(groupName) + groupName);
-            } else {
-                team.setPrefix(getGroupPrefix(groupName));
             }
+            team.setPrefix(getGroupPrefix(groupName));
+
             if (getPlayerGroupWithID(uuid).contains(team.getName())) {
                 team.addEntry(player.getName());
                 team.setColor(ChatColor.getByChar(getGroupTablistColor(groupName).replace("§", "")));

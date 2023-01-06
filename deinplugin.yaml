@@ -8,7 +8,7 @@ download:
   name: Vynl
 supportedPlatforms:
   - spigot
-supportedGameVersions: ^1.19
+supportedGameVersions: 1.19.2
 category: adminTool
 introduction:
   de: Vynl ist ein PermissionSystem wo du Spieler gruppen und Permissions geben kannst!
