@@ -26,12 +26,6 @@ public class PermissionListener implements Listener {
     }
 
     @EventHandler
-    public void onPlayerQuit(PlayerQuitEvent playerQuitEvent) {
-        Player player = playerQuitEvent.getPlayer();
-        player.setOp(false);
-    }
-
-    @EventHandler
     public void onPlayerChat(PlayerChatEvent playerChatEvent) {
         Player player = playerChatEvent.getPlayer();
         String uuid = player.getUniqueId().toString();

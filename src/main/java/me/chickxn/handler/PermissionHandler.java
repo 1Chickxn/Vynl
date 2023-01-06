@@ -97,7 +97,6 @@ public final class PermissionHandler {
             player.removeAttachment(permissionAttachment);
         }
         permissions.clear();
-        player.setOp(false);
         initGroupPermissions(player);
         initPlayerPermissions(player);
     }
@@ -166,7 +165,7 @@ public final class PermissionHandler {
         for (String groupName : listGroups()) {
             Team team = scoreboard.getTeam(getGroupID(groupName) + groupName);
             if (team == null) {
-                scoreboard.registerNewTeam(getGroupID(groupName) + groupName);
+                team = scoreboard.registerNewTeam(getGroupID(groupName) + groupName);
             }
             team.setPrefix(getGroupPrefix(groupName));
 
