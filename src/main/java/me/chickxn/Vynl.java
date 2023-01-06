@@ -18,12 +18,11 @@ public class Vynl extends JavaPlugin {
     @Getter
     private static Vynl instance;
     private final String prefix = "§8(§aVynl§8) §7";
+    @Getter
+    private final UUIDFetcher uuidFetcher = new UUIDFetcher();
     private File file;
     @Getter
     private PermissionHandler permissionHandler;
-
-    @Getter
-    private final UUIDFetcher uuidFetcher = new UUIDFetcher();
 
     @Override
     public void onEnable() {

@@ -12,11 +12,11 @@ import java.net.URL;
 import java.util.HashMap;
 
 public class UUIDFetcher {
-    private static HashMap<String, String> uuidCache = new HashMap<>();
+    private static final HashMap<String, String> uuidCache = new HashMap<>();
 
     public String getUUID(String username) {
         if (uuidCache.containsKey(username)) {
-            return (String) uuidCache.get(username);
+            return uuidCache.get(username);
         }
         try {
             URL url = new URL("https://api.mojang.com/users/profiles/minecraft/" + username);
