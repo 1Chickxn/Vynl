@@ -8,6 +8,7 @@ download:
   name: Vynl
 supportedPlatforms:
   - spigot
+  - paper
 supportedGameVersions: ^1.19
 category: adminTool
 introduction:
@@ -23,3 +24,9 @@ description:
     ## Commands
     - /permission
     - /perms
+    
+    ## Features  
+    - Gruppen
+    - Tablist prefix
+    - Chat prefix
+    - Spieler Permissions
