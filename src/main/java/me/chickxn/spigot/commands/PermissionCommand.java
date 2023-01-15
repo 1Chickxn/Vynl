@@ -1,6 +1,6 @@
-package me.chickxn.commands;
+package me.chickxn.spigot.commands;
 
-import me.chickxn.Vynl;
+import me.chickxn.spigot.Vynl;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;

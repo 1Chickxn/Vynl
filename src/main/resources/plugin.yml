@@ -1,7 +1,7 @@
 name: Vynl
 version: 1.0
 author: 1Chickxn
-main: me.chickxn.Vynl
+main: me.chickxn.spigot.Vynl
 commands:
   permission:
     aliases:

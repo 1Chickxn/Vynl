@@ -1,6 +1,6 @@
-package me.chickxn.listener;
+package me.chickxn.spigot.listener;
 
-import me.chickxn.Vynl;
+import me.chickxn.spigot.Vynl;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -15,6 +15,9 @@ public class PermissionListener implements Listener {
         Player player = playerJoinEvent.getPlayer();
         if (!Vynl.getInstance().getPermissionHandler().existsPlayer(player.getUniqueId().toString())) {
             Vynl.getInstance().getPermissionHandler().createPlayer(player.getUniqueId().toString(), "default");
+        }
+        if (!Vynl.getInstance().getPermissionHandler().existsGroup(Vynl.getInstance().getPermissionHandler().getPlayerGroup(player.getUniqueId().toString()))) {
+            Vynl.getInstance().getPermissionHandler().setPlayerGroup(player.getUniqueId().toString(), "default");
         }
         Vynl.getInstance().getPermissionHandler().initGroupPermissions(player);
         Vynl.getInstance().getPermissionHandler().initPlayerPermissions(player);

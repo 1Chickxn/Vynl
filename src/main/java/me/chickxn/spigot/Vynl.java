@@ -1,10 +1,10 @@
-package me.chickxn;
+package me.chickxn.spigot;
 
 import lombok.Getter;
-import me.chickxn.commands.PermissionCommand;
-import me.chickxn.fetcher.UUIDFetcher;
-import me.chickxn.handler.PermissionHandler;
-import me.chickxn.listener.PermissionListener;
+import me.chickxn.spigot.commands.PermissionCommand;
+import me.chickxn.spigot.fetcher.UUIDFetcher;
+import me.chickxn.spigot.handler.PermissionHandler;
+import me.chickxn.spigot.listener.PermissionListener;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;

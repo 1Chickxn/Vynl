@@ -1,7 +1,7 @@
-package me.chickxn.handler;
+package me.chickxn.spigot.handler;
 
 import lombok.Getter;
-import me.chickxn.Vynl;
+import me.chickxn.spigot.Vynl;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.InvalidConfigurationException;
@@ -32,6 +32,13 @@ public final class PermissionHandler {
                 config.createNewFile();
                 yamlConfiguration.options().header("Permissions");
                 yamlConfiguration.options().copyDefaults(true);
+                yamlConfiguration.addDefault("mysql.use", false);
+                yamlConfiguration.addDefault("mysql.hostname", "hostname");
+                yamlConfiguration.addDefault("mysql.database", "database");
+                yamlConfiguration.addDefault("mysql.username", "username");
+                yamlConfiguration.addDefault("mysql.password", "passowrd");
+                yamlConfiguration.addDefault("mysql.port", 3306);
+
                 yamlConfiguration.addDefault("prefix.chat", "{group} {player} §8| §7{message} {suffix}");
                 yamlConfiguration.addDefault("permission.groups.default.permissions", List.of("module.bank.use"));
                 yamlConfiguration.addDefault("permission.groups.admin.permissions", List.of("module.bank.use"));
@@ -97,6 +104,9 @@ public final class PermissionHandler {
             player.removeAttachment(permissionAttachment);
         }
         permissions.clear();
+        if (!Vynl.getInstance().getPermissionHandler().existsGroup(Vynl.getInstance().getPermissionHandler().getPlayerGroup(player.getUniqueId().toString()))) {
+            Vynl.getInstance().getPermissionHandler().setPlayerGroup(player.getUniqueId().toString(), "default");
+        }
         initGroupPermissions(player);
         initPlayerPermissions(player);
     }
