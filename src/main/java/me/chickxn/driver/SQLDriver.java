@@ -1,6 +1,8 @@
 package me.chickxn.driver;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class SQLDriver {
 
@@ -110,4 +112,20 @@ public class SQLDriver {
         }
     }
 
+    public void createTables() {
+        if (isConnected()) {
+            try {
+                Statement statement = this.getConnection().createStatement();
+                statement.executeUpdate("CREATE TABLE IF NOT EXISTS permission_groups (groupName VARCHAR(255), groupPermissions VARCHAR(255), groupID VARCHAR(255), groupPrefix VARCHAR(255), groupTablistColor VARCHAR(255), groupSuffix VARCHAR(255))");
+                statement.executeUpdate("CREATE TABLE IF NOT EXISTS permission_player (uuid VARCHAR(255),currentGroup VARCHAR(255), playerPermissions VARCHAR(255))");
+                statement.executeUpdate("ALTER TABLE permission_groups ADD UNIQUE (groupName)");
+                statement.executeUpdate("INSERT INTO permission_groups (groupName, groupPermissions, groupID, groupPrefix, groupTablistColor, groupSuffix) VALUES ('admin', '" + List.of("module.use") + "', '001', '§cAdmin', '§c', '§7')");
+                statement.executeUpdate("INSERT INTO permission_groups (groupName, groupPermissions, groupID, groupPrefix, groupTablistColor, groupSuffix) VALUES ('default', '" + List.of("module.use") + "', '002', '§7default', '§7', '§7')");
+            } catch (SQLException e) {
+
+            }
+        }else{
+            connect();
+        }
+    }
 }
