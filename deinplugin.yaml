@@ -18,7 +18,7 @@ description:
   
     ## Vynl - PermissionSystem
     Vynl ist ein PermissionSystem in der minecraft version 1.19.*.
-    Das PermissionSystem verfügt überein GruppenSystem mit eigenen Chat und Tablist Prefixe. Diese können in der permission.yml angepasst werden.
+    Das PermissionSystem verfügt überein GruppenSystem mit eigenen Chat und Tablist Prefixe. Diese können in der permission.yml oder in der mysql angepasst werden.
     Außerdem kann man Spieler auch einzelne Permissions geben.
     
     ## Commands
