@@ -14,6 +14,7 @@ public class PermissionListener implements Listener {
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent playerJoinEvent) {
         Player player = playerJoinEvent.getPlayer();
+        System.out.println(player.getUniqueId());
         new UpdateChecker(Vynl.getInstance(), 107221).getVersion(version -> {
             if (Vynl.getInstance().getDescription().getVersion().equals(version)) {
             } else {

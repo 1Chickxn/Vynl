@@ -28,6 +28,9 @@ public class PermissionCommand implements CommandExecutor {
                             if (Vynl.getInstance().getPermissionHandler().existsGroup(groupName)) {
                                 String groupPermissions = String.valueOf(Vynl.getInstance().getPermissionHandler().listGroupPermissions(groupName));
                                 commandSender.sendMessage(Vynl.getInstance().getPrefix() + "Group: §a" + groupName);
+                                commandSender.sendMessage(Vynl.getInstance().getPrefix() + "Prefix: §a" + Vynl.getInstance().getPermissionHandler().getGroupPrefix(groupName)  + Vynl.getInstance().getPermissionHandler().getGroupTablistColor(groupName) + commandSender.getName());
+                                commandSender.sendMessage(Vynl.getInstance().getPrefix() + "namecolor: §a" + Vynl.getInstance().getPermissionHandler().getGroupTablistColor(groupName) + commandSender.getName());
+                                commandSender.sendMessage(Vynl.getInstance().getPrefix() + "ID: §a" + Vynl.getInstance().getPermissionHandler().getGroupID(groupName));
                                 commandSender.sendMessage(Vynl.getInstance().getPrefix() + "Permissions: §a" + groupPermissions.replace("[", "").replace("]", "").replace(",", "§8,§a"));
                             } else {
                                 commandSender.sendMessage(Vynl.getInstance().getPrefix() + "The group §8(§a" + groupName + "§8) §7does not exist§8!");
@@ -95,7 +98,7 @@ public class PermissionCommand implements CommandExecutor {
                                 for (Player onlinePlayers : Bukkit.getOnlinePlayers()) {
                                     Vynl.getInstance().getPermissionHandler().setGroupPrefix(onlinePlayers);
                                 }
-                                commandSender.sendMessage(Vynl.getInstance().getPrefix() + "The group §8(§a" + groupName + "§8) §7has a new suffix §8(§a" + nameColor.replace("&", "§") + "§8)§8!");
+                                commandSender.sendMessage(Vynl.getInstance().getPrefix() + "The group §8(§a" + groupName + "§8) §7has a new namecolor §8(§a" + nameColor.toString() + "§8)§8!");
 
                             } else {
                                 commandSender.sendMessage(Vynl.getInstance().getPrefix() + "The group §8(§a" + groupName + "§8) §7does not exist§8!");
@@ -181,7 +184,7 @@ public class PermissionCommand implements CommandExecutor {
                             sendHelp(commandSender);
                         }
                     }
-                }else if (args.length >= 5) {
+                }else if(args.length >= 5) {
                     String groupName = args[1];
                     String playerName = args[1];
                     String permissions = args[3];
@@ -208,7 +211,6 @@ public class PermissionCommand implements CommandExecutor {
             } else {
                 commandSender.sendMessage(Vynl.getInstance().getPrefix() + "You do not have §cpermission§7 to do that§8!");
             }
-
         return false;
     }
 

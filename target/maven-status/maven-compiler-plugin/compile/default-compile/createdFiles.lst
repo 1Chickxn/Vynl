@@ -4,7 +4,5 @@ me\chickxn\spigot\listener\PermissionListener.class
 me\chickxn\spigot\handler\PermissionHandler.class
 me\chickxn\driver\SQLDriver.class
 me\chickxn\spigot\fetcher\UUIDFetcher.class
-me\chickxn\bungeecord\listener\PermissionListener.class
 me\chickxn\spigot\checker\UpdateChecker.class
 me\chickxn\spigot\Vynl.class
-me\chickxn\bungeecord\Vynl.class
