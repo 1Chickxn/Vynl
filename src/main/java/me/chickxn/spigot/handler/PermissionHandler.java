@@ -373,7 +373,8 @@ public final class PermissionHandler {
     public void setGroupSuffix(String groupName, String suffix) {
         if (existsGroup(groupName.toLowerCase())) {
             if (!yamlConfiguration.getBoolean("mysql.use")) {
-                yamlConfiguration.set("permission." + groupName.toLowerCase() + ".suffix", suffix);
+                yamlConfiguration.set("permission.groups." + groupName.toLowerCase() + ".suffix", suffix);
+                saveConfig();
             }else{
                 try {
                     Vynl.getInstance().getSqlDriver().update(Vynl.getInstance().getSqlDriver().getConnection().prepareStatement("UPDATE permission_groups SET groupSuffix='" + suffix + "' WHERE groupName='" + groupName.toLowerCase() + "'"));
@@ -387,7 +388,8 @@ public final class PermissionHandler {
     public void setGroupPrefix(String groupName, String prefix) {
         if (existsGroup(groupName.toLowerCase())) {
             if (!yamlConfiguration.getBoolean("mysql.use")) {
-                yamlConfiguration.set("permission." + groupName.toLowerCase() + ".suffix", prefix);
+                yamlConfiguration.set("permission.groups." + groupName.toLowerCase() + ".prefix", prefix);
+                saveConfig();
             }else{
                 try {
                     Vynl.getInstance().getSqlDriver().update(Vynl.getInstance().getSqlDriver().getConnection().prepareStatement("UPDATE permission_groups SET groupPrefix='" + prefix + "' WHERE groupName='" + groupName.toLowerCase() + "'"));
@@ -401,7 +403,8 @@ public final class PermissionHandler {
     public void setGroupNameColor(String groupName, String nameColor) {
         if (existsGroup(groupName.toLowerCase())) {
             if (!yamlConfiguration.getBoolean("mysql.use")) {
-                yamlConfiguration.set("permission." + groupName.toLowerCase() + ".tablist.namecolor", nameColor);
+                yamlConfiguration.set("permission.groups." + groupName.toLowerCase() + ".tablist.namecolor", nameColor);
+                saveConfig();
             }else{
                 try {
                     Vynl.getInstance().getSqlDriver().update(Vynl.getInstance().getSqlDriver().getConnection().prepareStatement("UPDATE permission_groups SET groupTablistColor='" + nameColor + "' WHERE groupName='" + groupName.toLowerCase() + "'"));
@@ -415,7 +418,8 @@ public final class PermissionHandler {
     public void setGroupID(String groupName, String groupID) {
         if (existsGroup(groupName.toLowerCase())) {
             if (!yamlConfiguration.getBoolean("mysql.use")) {
-                yamlConfiguration.set("permission." + groupName.toLowerCase() + ".id", groupID);
+                yamlConfiguration.set("permission.groups." + groupName.toLowerCase() + ".id", groupID);
+                saveConfig();
             }else{
                 try {
                     Vynl.getInstance().getSqlDriver().update(Vynl.getInstance().getSqlDriver().getConnection().prepareStatement("UPDATE permission_groups SET groupID='" + groupID + "' WHERE groupName='" + groupName.toLowerCase() + "'"));
