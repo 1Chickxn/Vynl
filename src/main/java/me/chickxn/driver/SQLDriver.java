@@ -1,7 +1,6 @@
 package me.chickxn.driver;
 
 import java.sql.*;
-import java.util.ArrayList;
 import java.util.List;
 
 public class SQLDriver {
@@ -104,14 +103,6 @@ public class SQLDriver {
         return connection;
     }
 
-    public static class ConnectionException extends Exception {
-        private static final long serialVersionUID = 8348749992936357317L;
-
-        public ConnectionException(String message) {
-            super(message);
-        }
-    }
-
     public void createTables() {
         if (isConnected()) {
             try {
@@ -124,8 +115,16 @@ public class SQLDriver {
             } catch (SQLException e) {
 
             }
-        }else{
+        } else {
             connect();
+        }
+    }
+
+    public static class ConnectionException extends Exception {
+        private static final long serialVersionUID = 8348749992936357317L;
+
+        public ConnectionException(String message) {
+            super(message);
         }
     }
 }

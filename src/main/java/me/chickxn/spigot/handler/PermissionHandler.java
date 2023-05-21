@@ -65,10 +65,10 @@ public final class PermissionHandler {
                 if (!yamlConfiguration.getBoolean("mysql.use")) {
                     yamlConfiguration.set("permission.player." + uuid + ".group", groupName.toLowerCase());
                     this.saveConfig();
-                }else{
+                } else {
                     try {
                         Statement statement = Vynl.getInstance().getSqlDriver().getConnection().createStatement();
-                        statement.executeUpdate("UPDATE permission_player SET currentGroup='" + groupName.toLowerCase() + "' WHERE uuid='"+ uuid +"'");
+                        statement.executeUpdate("UPDATE permission_player SET currentGroup='" + groupName.toLowerCase() + "' WHERE uuid='" + uuid + "'");
                     } catch (SQLException sqlException) {
                         throw new RuntimeException(sqlException);
                     }
@@ -85,10 +85,10 @@ public final class PermissionHandler {
                     yamlConfiguration.set("permission.player." + uuid + ".group", groupName.toLowerCase());
                     yamlConfiguration.set("permission.player." + uuid + ".permissions", playerPermissions);
                     this.saveConfig();
-                }else{
+                } else {
                     try {
                         Statement statement = Vynl.getInstance().getSqlDriver().getConnection().createStatement();
-                        statement.executeUpdate("INSERT INTO permission_player (uuid, currentGroup, playerPermissions) VALUES ('" + uuid + "', '" + groupName.toLowerCase() + "', '" +  List.of("module.use") + "')");
+                        statement.executeUpdate("INSERT INTO permission_player (uuid, currentGroup, playerPermissions) VALUES ('" + uuid + "', '" + groupName.toLowerCase() + "', '" + List.of("module.use") + "')");
                     } catch (SQLException sqlException) {
                         throw new RuntimeException(sqlException);
                     }
@@ -101,7 +101,7 @@ public final class PermissionHandler {
         if (!yamlConfiguration.getBoolean("mysql.use")) {
             ArrayList<String> playerPermissions = (ArrayList<String>) yamlConfiguration.get("permission.player." + uuid + ".permissions");
             return playerPermissions;
-        }else{
+        } else {
             try {
                 PreparedStatement preparedStatement = Vynl.getInstance().getSqlDriver().getConnection().prepareStatement("SELECT * FROM permission_player WHERE uuid='" + uuid + "'");
                 ResultSet resultSet = preparedStatement.executeQuery();
@@ -123,7 +123,7 @@ public final class PermissionHandler {
     public String getPlayerGroup(String uuid) {
         if (!yamlConfiguration.getBoolean("mysql.use")) {
             return yamlConfiguration.getString("permission.player." + uuid + ".group");
-        }else{
+        } else {
             try {
                 PreparedStatement preparedStatement = Vynl.getInstance().getSqlDriver().getConnection().prepareStatement("SELECT * FROM permission_player WHERE uuid='" + uuid + "'");
                 ResultSet resultSet = preparedStatement.executeQuery();
@@ -143,7 +143,7 @@ public final class PermissionHandler {
             String group = yamlConfiguration.getString("permission.player." + uuid + ".group");
             String groupID = getGroupID(group);
             return groupID + group;
-        }else{
+        } else {
             try {
                 PreparedStatement preparedStatement = Vynl.getInstance().getSqlDriver().getConnection().prepareStatement("SELECT * FROM permission_groups WHERE groupName='" + getPlayerGroup(uuid) + "'");
                 ResultSet resultSet = preparedStatement.executeQuery();
@@ -161,7 +161,7 @@ public final class PermissionHandler {
     public boolean existsPlayer(String uuid) {
         if (!yamlConfiguration.getBoolean("mysql.use")) {
             return !(yamlConfiguration.get("permission.player." + uuid) == null);
-        }else{
+        } else {
             try {
                 PreparedStatement preparedStatement = Vynl.getInstance().getSqlDriver().getConnection().prepareStatement("SELECT * FROM permission_player WHERE uuid='" + uuid + "'");
                 ResultSet resultSet = preparedStatement.executeQuery();
@@ -182,7 +182,7 @@ public final class PermissionHandler {
                     playerPermissions.remove(permission);
                     yamlConfiguration.set("permission.player." + uuid + ".permissions", playerPermissions);
                     this.saveConfig();
-                }else{
+                } else {
                     try {
                         ArrayList<String> playerPermissions = listPlayerPermission(uuid);
                         playerPermissions.remove(permission);
@@ -203,7 +203,7 @@ public final class PermissionHandler {
                     playerPermissions.add(permission);
                     yamlConfiguration.set("permission." + uuid + ".permissions", playerPermissions);
                     this.saveConfig();
-                }else{
+                } else {
                     try {
                         ArrayList<String> playerPermissions = listPlayerPermission(uuid);
                         playerPermissions.add(permission);
@@ -220,7 +220,7 @@ public final class PermissionHandler {
         if (!yamlConfiguration.getBoolean("mysql.use")) {
             ArrayList<String> playerPermissions = (ArrayList<String>) yamlConfiguration.get("permission.player." + uuid + ".permissions");
             return playerPermissions.contains(permission);
-        }else {
+        } else {
             try {
                 PreparedStatement preparedStatement = Vynl.getInstance().getSqlDriver().getConnection().prepareStatement("SELECT * FROM permission_player WHERE uuid='" + uuid + "'");
                 ResultSet resultSet = preparedStatement.executeQuery();
@@ -375,7 +375,7 @@ public final class PermissionHandler {
             if (!yamlConfiguration.getBoolean("mysql.use")) {
                 yamlConfiguration.set("permission.groups." + groupName.toLowerCase() + ".suffix", suffix);
                 saveConfig();
-            }else{
+            } else {
                 try {
                     Vynl.getInstance().getSqlDriver().update(Vynl.getInstance().getSqlDriver().getConnection().prepareStatement("UPDATE permission_groups SET groupSuffix='" + suffix + "' WHERE groupName='" + groupName.toLowerCase() + "'"));
                 } catch (Exception sqlException) {
@@ -390,7 +390,7 @@ public final class PermissionHandler {
             if (!yamlConfiguration.getBoolean("mysql.use")) {
                 yamlConfiguration.set("permission.groups." + groupName.toLowerCase() + ".prefix", prefix);
                 saveConfig();
-            }else{
+            } else {
                 try {
                     Vynl.getInstance().getSqlDriver().update(Vynl.getInstance().getSqlDriver().getConnection().prepareStatement("UPDATE permission_groups SET groupPrefix='" + prefix + "' WHERE groupName='" + groupName.toLowerCase() + "'"));
                 } catch (Exception sqlException) {
@@ -405,7 +405,7 @@ public final class PermissionHandler {
             if (!yamlConfiguration.getBoolean("mysql.use")) {
                 yamlConfiguration.set("permission.groups." + groupName.toLowerCase() + ".tablist.namecolor", nameColor);
                 saveConfig();
-            }else{
+            } else {
                 try {
                     Vynl.getInstance().getSqlDriver().update(Vynl.getInstance().getSqlDriver().getConnection().prepareStatement("UPDATE permission_groups SET groupTablistColor='" + nameColor + "' WHERE groupName='" + groupName.toLowerCase() + "'"));
                 } catch (Exception sqlException) {
@@ -420,7 +420,7 @@ public final class PermissionHandler {
             if (!yamlConfiguration.getBoolean("mysql.use")) {
                 yamlConfiguration.set("permission.groups." + groupName.toLowerCase() + ".id", groupID);
                 saveConfig();
-            }else{
+            } else {
                 try {
                     Vynl.getInstance().getSqlDriver().update(Vynl.getInstance().getSqlDriver().getConnection().prepareStatement("UPDATE permission_groups SET groupID='" + groupID + "' WHERE groupName='" + groupName.toLowerCase() + "'"));
                 } catch (Exception sqlException) {

@@ -42,7 +42,7 @@ public class Vynl extends JavaPlugin {
         if (!file.exists()) file.mkdir();
         this.permissionHandler = new PermissionHandler();
         if (permissionHandler.getYamlConfiguration().getBoolean("mysql.use")) {
-            sqlDriver = new SQLDriver(permissionHandler.getYamlConfiguration().getString("mysql.hostname"), permissionHandler.getYamlConfiguration().getString("mysql.database"), permissionHandler.getYamlConfiguration().getString("mysql.username"),permissionHandler.getYamlConfiguration().getString("mysql.password"), permissionHandler.getYamlConfiguration().getInt("mysql.port"));
+            sqlDriver = new SQLDriver(permissionHandler.getYamlConfiguration().getString("mysql.hostname"), permissionHandler.getYamlConfiguration().getString("mysql.database"), permissionHandler.getYamlConfiguration().getString("mysql.username"), permissionHandler.getYamlConfiguration().getString("mysql.password"), permissionHandler.getYamlConfiguration().getInt("mysql.port"));
             this.sqlDriver.connect();
             this.sqlDriver.createTables();
             if (!this.sqlDriver.isConnected()) return;
