@@ -2,12 +2,19 @@ package me.chickxn.spigot.listener;
 
 import me.chickxn.spigot.Vynl;
 import me.chickxn.spigot.checker.UpdateChecker;
+import net.md_5.bungee.api.ChatMessageType;
+import net.md_5.bungee.api.chat.ClickEvent;
+import net.md_5.bungee.api.chat.HoverEvent;
+import net.md_5.bungee.api.chat.TextComponent;
+import net.md_5.bungee.api.chat.hover.content.Text;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerChatEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+
+import java.awt.*;
 
 public class PermissionListener implements Listener {
 
@@ -19,6 +26,10 @@ public class PermissionListener implements Listener {
             } else {
                 if (player.isOp()) {
                     player.sendMessage(Vynl.getInstance().getPrefix() + "There is a new update §aavailable§8!");
+                    TextComponent textComponent = new TextComponent(Vynl.getInstance().getPrefix() + "hover above this message to §aupdate§8!");
+                    textComponent.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text("§7Click me to open the §aurl")));
+                    textComponent.setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://www.spigotmc.org/resources/vynl-permissionsystem.107221/"));
+                    player.spigot().sendMessage(textComponent);
                 }
             }
         });
@@ -33,6 +44,7 @@ public class PermissionListener implements Listener {
         Vynl.getInstance().getPermissionHandler().initGroupPermissions(player);
         Vynl.getInstance().getPermissionHandler().initPlayerPermissions(player);
         Vynl.getInstance().getPermissionHandler().setGroupPrefix(player);
+
         for (Player onlinePlayers : Bukkit.getOnlinePlayers()) {
             Vynl.getInstance().getPermissionHandler().setGroupPrefix(onlinePlayers);
         }

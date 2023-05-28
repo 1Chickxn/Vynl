@@ -41,6 +41,7 @@ public class Vynl extends JavaPlugin implements PluginMessageListener {
             if (this.getDescription().getVersion().equals(version)) {
             } else {
                 Bukkit.getConsoleSender().sendMessage(getPrefix() + "There is a new update §aavailable§8!");
+                Bukkit.getConsoleSender().sendMessage(getPrefix() + "https://www.spigotmc.org/resources/vynl-permissionsystem.107221/");
             }
         });
         this.file = new File("plugins/Vynl/");
