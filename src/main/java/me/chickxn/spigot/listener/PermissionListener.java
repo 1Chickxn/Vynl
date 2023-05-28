@@ -24,9 +24,11 @@ public class PermissionListener implements Listener {
         });
         if (!Vynl.getInstance().getPermissionHandler().existsPlayer(player.getUniqueId().toString())) {
             Vynl.getInstance().getPermissionHandler().createPlayer(player.getUniqueId().toString(), "default");
+            Vynl.getInstance().sendBungeeMessage("BungeeCord", "permission update");
         }
         if (!Vynl.getInstance().getPermissionHandler().existsGroup(Vynl.getInstance().getPermissionHandler().getPlayerGroup(player.getUniqueId().toString()))) {
             Vynl.getInstance().getPermissionHandler().setPlayerGroup(player.getUniqueId().toString(), "default");
+            Vynl.getInstance().sendBungeeMessage("BungeeCord", "permission update");
         }
         Vynl.getInstance().getPermissionHandler().initGroupPermissions(player);
         Vynl.getInstance().getPermissionHandler().initPlayerPermissions(player);

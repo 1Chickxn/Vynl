@@ -1,5 +1,7 @@
 package me.chickxn.spigot;
 
+import com.google.common.io.ByteArrayDataOutput;
+import com.google.common.io.ByteStreams;
 import lombok.Getter;
 import me.chickxn.driver.SQLDriver;
 import me.chickxn.spigot.checker.UpdateChecker;
@@ -11,11 +13,12 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.plugin.messaging.PluginMessageListener;
 
 import java.io.File;
 
 @Getter
-public class Vynl extends JavaPlugin {
+public class Vynl extends JavaPlugin implements PluginMessageListener {
 
     @Getter
     private static Vynl instance;
@@ -32,6 +35,8 @@ public class Vynl extends JavaPlugin {
     @Override
     public void onEnable() {
         instance = this;
+        getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
+        getServer().getMessenger().registerIncomingPluginChannel(this, "BungeeCord", this);
         new UpdateChecker(this, 107221).getVersion(version -> {
             if (this.getDescription().getVersion().equals(version)) {
             } else {
@@ -55,6 +60,7 @@ public class Vynl extends JavaPlugin {
         for (Player onlinePlayers : Bukkit.getOnlinePlayers()) {
             Vynl.getInstance().getPermissionHandler().updatePermission(onlinePlayers);
             Vynl.getInstance().getPermissionHandler().setGroupPrefix(onlinePlayers);
+            sendBungeeMessage("BungeeCord", "permission update");
         }
     }
 
@@ -62,5 +68,15 @@ public class Vynl extends JavaPlugin {
     public void onDisable() {
         Bukkit.getConsoleSender().sendMessage(getPrefix() + "Vynl - Permissionsystem §asuccessfully §7disabled§8!");
         Bukkit.getConsoleSender().sendMessage(getPrefix() + "Author: §a1Chickxn §8| §7Version: §a" + this.getDescription().getVersion());
+    }
+
+    @Override
+    public void onPluginMessageReceived(String s, Player player, byte[] bytes) {
+
+    }
+    public void sendBungeeMessage(String channel, String message) {
+        ByteArrayDataOutput out = ByteStreams.newDataOutput();
+        out.writeUTF(message);
+        Bukkit.getServer().sendPluginMessage(this, channel, out.toByteArray());
     }
 }

@@ -85,6 +85,7 @@ public class PermissionCommand implements CommandExecutor {
                                 for (Player onlinePlayers : Bukkit.getOnlinePlayers()) {
                                     Vynl.getInstance().getPermissionHandler().updatePermission(onlinePlayers);
                                 }
+                                Vynl.getInstance().sendBungeeMessage("BungeeCord", "permission update");
                             } else {
                                 commandSender.sendMessage(Vynl.getInstance().getPrefix() + "The permission §8(§a" + permissions + "§8) §7is already in the group §8(§a" + groupName + "§8)§8!");
                             }
@@ -123,6 +124,7 @@ public class PermissionCommand implements CommandExecutor {
                                 for (Player onlinePlayers : Bukkit.getOnlinePlayers()) {
                                     Vynl.getInstance().getPermissionHandler().updatePermission(onlinePlayers);
                                 }
+                                Vynl.getInstance().sendBungeeMessage("BungeeCord", "permission update");
                             } else {
                                 commandSender.sendMessage(Vynl.getInstance().getPrefix() + "The permission §8(§a" + permissions + "§8) §7does not exist in the group §8(§a" + groupName + "§8)§8!");
                             }
@@ -141,6 +143,7 @@ public class PermissionCommand implements CommandExecutor {
                                 for (Player onlinePlayers : Bukkit.getOnlinePlayers()) {
                                     Vynl.getInstance().getPermissionHandler().updatePermission(onlinePlayers);
                                 }
+                                Vynl.getInstance().sendBungeeMessage("BungeeCord", "permission update");
                             } else {
                                 commandSender.sendMessage(Vynl.getInstance().getPrefix() + "The player §8(§a" + playerName + "§8) §7already has the permission §8(§a" + permissions + "§8)§8!");
                             }
@@ -155,6 +158,7 @@ public class PermissionCommand implements CommandExecutor {
                                 for (Player onlinePlayers : Bukkit.getOnlinePlayers()) {
                                     Vynl.getInstance().getPermissionHandler().updatePermission(onlinePlayers);
                                 }
+                                Vynl.getInstance().sendBungeeMessage("BungeeCord", "permission update");
                             } else {
                                 commandSender.sendMessage(Vynl.getInstance().getPrefix() + "The player §8(§a" + playerName + "§8) §7does not have the permission §8(§a" + permissions + "§8)§8!");
                             }
