@@ -1,8 +1,0 @@
-name: Vynl
-version: 1.5
-author: 1Chickxn
-main: me.chickxn.spigot.Vynl
-commands:
-  permission:
-    aliases:
-      - perms
