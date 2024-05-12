@@ -3,15 +3,10 @@ package me.chickxn.bungeecord.listener;
 import me.chickxn.bungeecord.Vynl;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
-import net.md_5.bungee.api.event.LoginEvent;
 import net.md_5.bungee.api.event.PluginMessageEvent;
 import net.md_5.bungee.api.event.PostLoginEvent;
-import net.md_5.bungee.api.event.PreLoginEvent;
 import net.md_5.bungee.api.plugin.Listener;
-import net.md_5.bungee.api.plugin.Plugin;
 import net.md_5.bungee.event.EventHandler;
-
-import java.lang.reflect.Proxy;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -21,6 +16,7 @@ import java.util.Arrays;
 public class PermissonListener implements Listener {
 
     private ArrayList<String> currentPermissions = new ArrayList<>();
+
     @EventHandler
     public void onPlayerJoin(final PostLoginEvent postLoginEvent) {
         ProxiedPlayer proxiedPlayer = postLoginEvent.getPlayer();
@@ -40,24 +36,26 @@ public class PermissonListener implements Listener {
         if (event.getTag().equals("BungeeCord")) {
             byte[] data = event.getData();
             String message = new String(data);
-            ProxyServer.getInstance().getLogger().info("Nachricht erhalten: " + message);
-            for (ProxiedPlayer proxiedPlayer : ProxyServer.getInstance().getPlayers()) {
-                ProxyServer.getInstance().getLogger().info(String.valueOf(proxiedPlayer) + "-" + proxiedPlayer.getPermissions());
-                for (String curPermissions : proxiedPlayer.getPermissions()) {
-                    currentPermissions.add(curPermissions);
+            if (message.equals("daqrkIPvMxYz7O7triETahoKj1mD6BAn")) {
+                System.out.println("permission updatet");
+                for (ProxiedPlayer proxiedPlayer : ProxyServer.getInstance().getPlayers()) {
+                    ProxyServer.getInstance().getLogger().info(String.valueOf(proxiedPlayer) + "-" + proxiedPlayer.getPermissions());
+                    for (String curPermissions : proxiedPlayer.getPermissions()) {
+                        currentPermissions.add(curPermissions);
+                    }
+                    for (String permission : currentPermissions) {
+                        proxiedPlayer.setPermission(permission, false);
+                    }
+                    currentPermissions.clear();
+                    ProxyServer.getInstance().getLogger().info(String.valueOf(proxiedPlayer) + "-" + proxiedPlayer.getPermissions());
+                    for (String playerPermissions : listPlayerPermission(proxiedPlayer.getUniqueId().toString())) {
+                        proxiedPlayer.setPermission(playerPermissions, true);
+                    }
+                    for (String groupPermissions : listGroupPermissions(getPlayerGroup(proxiedPlayer.getUniqueId().toString()))) {
+                        proxiedPlayer.setPermission(groupPermissions, true);
+                    }
+                    ProxyServer.getInstance().getLogger().info(String.valueOf(proxiedPlayer) + "-" + proxiedPlayer.getPermissions());
                 }
-                for (String permission : currentPermissions) {
-                    proxiedPlayer.setPermission(permission, false);
-                }
-                currentPermissions.clear();
-                ProxyServer.getInstance().getLogger().info(String.valueOf(proxiedPlayer) + "-" + proxiedPlayer.getPermissions());
-                for (String playerPermissions : listPlayerPermission(proxiedPlayer.getUniqueId().toString())) {
-                    proxiedPlayer.setPermission(playerPermissions, true);
-                }
-                for (String groupPermissions : listGroupPermissions(getPlayerGroup(proxiedPlayer.getUniqueId().toString()))) {
-                    proxiedPlayer.setPermission(groupPermissions, true);
-                }
-                ProxyServer.getInstance().getLogger().info(String.valueOf(proxiedPlayer) + "-" + proxiedPlayer.getPermissions());
             }
         }
     }

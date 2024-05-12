@@ -17,15 +17,20 @@ import org.bukkit.plugin.messaging.PluginMessageListener;
 
 import java.io.File;
 
+
 @Getter
 public class Vynl extends JavaPlugin implements PluginMessageListener {
 
     @Getter
     private static Vynl instance;
+
     private final String prefix = "§8(§aVynl§8) §7";
+
     @Getter
     private final UUIDFetcher uuidFetcher = new UUIDFetcher();
+
     private File file;
+
     @Getter
     private PermissionHandler permissionHandler;
 
@@ -35,11 +40,11 @@ public class Vynl extends JavaPlugin implements PluginMessageListener {
     @Override
     public void onEnable() {
         instance = this;
+
         getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
         getServer().getMessenger().registerIncomingPluginChannel(this, "BungeeCord", this);
         new UpdateChecker(this, 107221).getVersion(version -> {
-            if (this.getDescription().getVersion().equals(version)) {
-            } else {
+            if (!this.getDescription().getVersion().equals(version)) {
                 Bukkit.getConsoleSender().sendMessage(getPrefix() + "There is a new update §aavailable§8!");
                 Bukkit.getConsoleSender().sendMessage(getPrefix() + "https://www.spigotmc.org/resources/vynl-permissionsystem.107221/");
             }
@@ -54,6 +59,7 @@ public class Vynl extends JavaPlugin implements PluginMessageListener {
             if (!this.sqlDriver.isConnected()) return;
         }
         getCommand("permission").setExecutor(new PermissionCommand());
+        getCommand("permission").setTabCompleter(new PermissionCommand());
         PluginManager pluginManager = Bukkit.getPluginManager();
         pluginManager.registerEvents(new PermissionListener(), this);
         Bukkit.getConsoleSender().sendMessage(getPrefix() + "Vynl - Permissionsystem §asuccessfully §7loaded§8!");
@@ -61,7 +67,7 @@ public class Vynl extends JavaPlugin implements PluginMessageListener {
         for (Player onlinePlayers : Bukkit.getOnlinePlayers()) {
             Vynl.getInstance().getPermissionHandler().updatePermission(onlinePlayers);
             Vynl.getInstance().getPermissionHandler().setGroupPrefix(onlinePlayers);
-            sendBungeeMessage("BungeeCord", "permission update");
+            sendBungeeMessage("BungeeCord", "daqrkIPvMxYz7O7triETahoKj1mD6BAn");
         }
     }
 
@@ -72,12 +78,13 @@ public class Vynl extends JavaPlugin implements PluginMessageListener {
     }
 
     @Override
-    public void onPluginMessageReceived(String s, Player player, byte[] bytes) {
+    public void onPluginMessageReceived(String string, Player player, byte[] bytes) {
 
     }
+
     public void sendBungeeMessage(String channel, String message) {
-        ByteArrayDataOutput out = ByteStreams.newDataOutput();
-        out.writeUTF(message);
-        Bukkit.getServer().sendPluginMessage(this, channel, out.toByteArray());
+        ByteArrayDataOutput byteArrayDataOutput = ByteStreams.newDataOutput();
+        byteArrayDataOutput.writeUTF(message);
+        Bukkit.getServer().sendPluginMessage(this, channel, byteArrayDataOutput.toByteArray());
     }
 }

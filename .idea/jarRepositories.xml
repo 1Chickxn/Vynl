@@ -7,9 +7,24 @@
       <option name="url" value="https://repo.maven.apache.org/maven2" />
     </remote-repository>
     <remote-repository>
+      <option name="id" value="sparkjava-releases" />
+      <option name="name" value="sparkjava-releases" />
+      <option name="url" value="https://repo1.maven.org/maven2/com/sparkjava/spark-core/" />
+    </remote-repository>
+    <remote-repository>
       <option name="id" value="spigot-repo" />
       <option name="name" value="spigot-repo" />
       <option name="url" value="https://hub.spigotmc.org/nexus/content/repositories/snapshots/" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="sparkjava-releases" />
+      <option name="name" value="sparkjava-releases" />
+      <option name="url" value="https://repo.maven.apache.org/maven2/com/sparkjava/spark-core/" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="spring-releases" />
+      <option name="name" value="Spring Releases" />
+      <option name="url" value="https://repo.spring.io/release" />
     </remote-repository>
     <remote-repository>
       <option name="id" value="central" />
@@ -25,6 +40,16 @@
       <option name="id" value="bungeecord-repo" />
       <option name="name" value="bungeecord-repo" />
       <option name="url" value="https://oss.sonatype.org/content/repositories/snapshots" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="jetty-releases" />
+      <option name="name" value="jetty-releases" />
+      <option name="url" value="https://repo.maven.apache.org/maven2/org/eclipse/jetty/websocket/" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="apache.snapshots" />
+      <option name="name" value="Apache Development Snapshot Repository" />
+      <option name="url" value="https://repository.apache.org/content/groups/snapshots/" />
     </remote-repository>
   </component>
 </project>

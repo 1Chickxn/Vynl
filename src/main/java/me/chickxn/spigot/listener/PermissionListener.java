@@ -2,7 +2,6 @@ package me.chickxn.spigot.listener;
 
 import me.chickxn.spigot.Vynl;
 import me.chickxn.spigot.checker.UpdateChecker;
-import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -13,8 +12,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerChatEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
-
-import java.awt.*;
 
 public class PermissionListener implements Listener {
 

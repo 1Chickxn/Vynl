@@ -294,9 +294,12 @@ public final class PermissionHandler {
             if (getPlayerGroupWithID(uuid).startsWith(team.getName())) {
                 team.addEntry(player.getName());
                 team.setColor(ChatColor.getByChar(getGroupTablistColor(groupName.toLowerCase()).replace("§", "")));
+            } else {
+                team.removeEntry(player.getName());
             }
         }
     }
+
 
     public String getGroupID(String groupName) {
         if (!yamlConfiguration.getBoolean("mysql.use")) {

@@ -5,9 +5,13 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 
-public class PermissionCommand implements CommandExecutor {
+import java.util.ArrayList;
+import java.util.List;
+
+public class PermissionCommand implements CommandExecutor, TabCompleter {
 
     @Override
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] args) {
@@ -232,5 +236,44 @@ public class PermissionCommand implements CommandExecutor {
         commandSender.sendMessage(Vynl.getInstance().getPrefix() + "/permission player §8(§aPLAYER§8) §7set §8(§aGROUP§8)");
         commandSender.sendMessage(Vynl.getInstance().getPrefix() + "/permission player §8(§aPLAYER§8) §7add §8(§aPERMISSION§8)");
         commandSender.sendMessage(Vynl.getInstance().getPrefix() + "/permission player §8(§aPLAYER§8) §7remove §8(§aPERMISSION§8)");
+    }
+
+    @Override
+    public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
+        List<String> completions = new ArrayList<>();
+        if (args.length == 1) {
+            completions.add("group");
+            completions.add("player");
+        } else if (args.length == 2) {
+            if ("group".equalsIgnoreCase(args[0])) {
+                completions.addAll(Vynl.getInstance().getPermissionHandler().listGroups());
+            } else if ("player".equalsIgnoreCase(args[0])) {
+                for (Player player : Vynl.getInstance().getServer().getOnlinePlayers()) {
+                    completions.add(player.getName());
+                }
+            }
+        } else if (args.length == 3) {
+            if ("group".equalsIgnoreCase(args[0])) {
+                completions.add("create");
+                completions.add("delete");
+                completions.add("remove");
+                completions.add("add");
+                completions.add("setprefix");
+                completions.add("setid");
+                completions.add("setnamecolor");
+            } else if ("player".equalsIgnoreCase(args[0])) {
+                completions.add("set");
+                completions.add("add");
+                completions.add("remove");
+            }
+        }
+        String currentArg = args[args.length - 1].toLowerCase();
+        List<String> filteredCompletions = new ArrayList<>();
+        for (String completion : completions) {
+            if (completion.toLowerCase().startsWith(currentArg)) {
+                filteredCompletions.add(completion);
+            }
+        }
+        return filteredCompletions;
     }
 }
